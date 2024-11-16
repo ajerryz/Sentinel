@@ -20,11 +20,7 @@ import com.alibaba.csp.sentinel.EntryType;
 import java.lang.annotation.*;
 
 /**
- * The annotation indicates a definition of Sentinel resource.
- *
- * @author Eric Zhao
- * @author zhaoyuguang
- * @since 0.1.1
+ * 该注解表明了Sentinel资源的定义
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -32,45 +28,40 @@ import java.lang.annotation.*;
 public @interface SentinelResource {
 
     /**
-     * @return name of the Sentinel resource
+     * Sentinel 资源的名称
      */
     String value() default "";
 
     /**
-     * @return the entry type (inbound or outbound), outbound by default
+     * 入口类型（入站或出站），默认为出站
      */
     EntryType entryType() default EntryType.OUT;
 
     /**
-     * @return the classification (type) of the resource
+     * 资源的分类（类型）
      * @since 1.7.0
      */
     int resourceType() default 0;
 
     /**
-     * @return name of the block exception function, empty by default
+     * 块异常函数的名称，默认为空
      */
     String blockHandler() default "";
 
     /**
-     * The {@code blockHandler} is located in the same class with the original method by default.
-     * However, if some methods share the same signature and intend to set the same block handler,
-     * then users can set the class where the block handler exists. Note that the block handler method
-     * must be static.
-     *
-     * @return the class where the block handler exists, should not provide more than one classes
+     * blockHandler 默认与原方法位于同一个类中，但如果有多个方法具有相同的签名，
+     * 且想要设置相同的 block handler，则用户可以设置 block handler 所在的类，注意 block handler 方法必须是静态的。<br/><br/>
+     * 块处理程序所在的类，不应提供多个类
      */
     Class<?>[] blockHandlerClass() default {};
 
     /**
-     * @return name of the fallback function, empty by default
+     * fallback函数的名称，默认为空
      */
     String fallback() default "";
 
     /**
-     * The {@code defaultFallback} is used as the default universal fallback method.
-     * It should not accept any parameters, and the return type should be compatible
-     * with the original method.
+     * defaultFallback 作为默认的通用 fallback 方法，不应接受任何参数，且返回类型应与原始方法兼容。
      *
      * @return name of the default fallback method, empty by default
      * @since 1.6.0
@@ -78,10 +69,8 @@ public @interface SentinelResource {
     String defaultFallback() default "";
 
     /**
-     * The {@code fallback} is located in the same class with the original method by default.
-     * However, if some methods share the same signature and intend to set the same fallback,
-     * then users can set the class where the fallback function exists. Note that the shared fallback method
-     * must be static.
+     * fallback 默认与原方法位于同一个类中，但如果有多个方法共享相同的签名，并希望设置相同的 fallback，
+     * 则用户可以设置 fallback 函数所在的类。注意，共享的 fallback 方法必须是静态的。
      *
      * @return the class where the fallback method is located (only single class)
      * @since 1.6.0
@@ -89,15 +78,13 @@ public @interface SentinelResource {
     Class<?>[] fallbackClass() default {};
 
     /**
-     * @return the list of exception classes to trace, {@link Throwable} by default
+     * 要跟踪的异常类列表，默认情况下为 Throwable
      * @since 1.5.1
      */
     Class<? extends Throwable>[] exceptionsToTrace() default {Throwable.class};
     
     /**
-     * Indicates the exceptions to be ignored. Note that {@code exceptionsToTrace} should
-     * not appear with {@code exceptionsToIgnore} at the same time, or {@code exceptionsToIgnore}
-     * will be of higher precedence.
+     * 表示要忽略的异常。请注意，exceptionsToTrace 不应与 exceptionsToIgnore 同时出现，否则 exceptionsToIgnore 的优先级会更高。
      *
      * @return the list of exception classes to ignore, empty by default
      * @since 1.6.0
