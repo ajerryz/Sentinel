@@ -30,6 +30,9 @@ public class RecordLog {
 
     private static com.alibaba.csp.sentinel.log.Logger logger = null;
 
+    /**
+     * 此时获取logger时，LoggerSpiProvider的static肯定执行完毕。
+     */
     static {
         try {
             // Load user-defined logger implementation first.

@@ -31,9 +31,12 @@ public final class LoggerSpiProvider {
 
     private static final Map<String, Logger> LOGGER_MAP = new HashMap<>();
 
+    // 使用SPI方式获取Sentinel自身的日志类
     static {
         // NOTE: this class SHOULD NOT depend on any other Sentinel classes
         // except the util classes to avoid circular dependency.
+        // 翻译：
+        // 此类不应依赖于除实用程序类之外的任何其他 Sentinel 类，以避免循环依赖。
         try {
             resolveLoggers();
         } catch (Throwable t) {
@@ -42,6 +45,9 @@ public final class LoggerSpiProvider {
         }
     }
 
+    /**
+     * 静态方法，获取Log
+     */
     public static Logger getLogger(String name) {
         if (name == null) {
             return null;
@@ -49,6 +55,10 @@ public final class LoggerSpiProvider {
         return LOGGER_MAP.get(name);
     }
 
+    /**
+     * SPI 解析Log, SPI的 interface 是该包下的Logger <br/>
+     * 1.日志必须使用LogTarget注解，该注解的value default="sentinelRecordLogger"，用作Map的key,以便getLogger(String)获取
+     */
     private static void resolveLoggers() {
         // NOTE: Here we cannot use {@code SpiLoader} directly because it depends on the RecordLog.
         ServiceLoader<Logger> loggerLoader = ServiceLoader.load(Logger.class);
@@ -63,10 +73,11 @@ public final class LoggerSpiProvider {
             if (StringUtil.isNotBlank(name) && !LOGGER_MAP.containsKey(name)) {
                 LOGGER_MAP.put(name, logger);
                 System.out.println("Sentinel Logger SPI loaded for <" + name + ">: "
-                    + logger.getClass().getCanonicalName());
+                        + logger.getClass().getCanonicalName());
             }
         }
     }
 
-    private LoggerSpiProvider() {}
+    private LoggerSpiProvider() {
+    }
 }
