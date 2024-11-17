@@ -76,6 +76,7 @@ public final class SpiLoader<S> {
     private static final String SPI_FILE_PREFIX = "META-INF/services/";
 
     // Cache the SpiLoader instances, key: classname of Service, value: SpiLoader instance
+    // 用于缓存对应的接口的权限定为key的 SpiLoader Map
     private static final ConcurrentHashMap<String, SpiLoader> SPI_LOADER_MAP = new ConcurrentHashMap<>();
 
     // Cache the classes of Provider
@@ -104,8 +105,7 @@ public final class SpiLoader<S> {
     private Class<S> service;
 
     /**
-     * Create SpiLoader instance via Service class
-     * Cached by className, and load from cache first
+     * 通过 className 缓存的服务类创建 SpiLoader 实例，并首先从缓存中加载
      *
      * @param service Service class
      * @param <T>     Service type
@@ -117,7 +117,9 @@ public final class SpiLoader<S> {
                 "SPI class[" + service.getName() + "] must be interface or abstract class");
 
         String className = service.getName();
+        // 从缓存中获取SpiLoader实例
         SpiLoader<T> spiLoader = SPI_LOADER_MAP.get(className);
+        // 双重null检查锁, 从缓存获取SpiLoader实例，或创建一个实例并返回
         if (spiLoader == null) {
             synchronized (SpiLoader.class) {
                 spiLoader = SPI_LOADER_MAP.get(className);

@@ -24,31 +24,30 @@ import com.alibaba.csp.sentinel.log.RecordLog;
 import com.alibaba.csp.sentinel.spi.SpiLoader;
 
 /**
- * Load registered init functions and execute in order.
- *
- * @author Eric Zhao
+ * 加载已注册的init函数并按顺序执行。
  */
 public final class InitExecutor {
 
     private static AtomicBoolean initialized = new AtomicBoolean(false);
 
     /**
-     * If one {@link InitFunc} throws an exception, the init process
-     * will immediately be interrupted and the application will exit.
-     *
-     * The initialization will be executed only once.
+     * 如果某个 InitFunc 抛出异常，init 进程会立即中断，应用程序退出。<br/>
+     * 初始化只会执行一次。
      */
     public static void doInit() {
         if (!initialized.compareAndSet(false, true)) {
             return;
         }
         try {
+            // 加载或从缓存中获取通过Spi方式缓存的InitFunc实例
             List<InitFunc> initFuncs = SpiLoader.of(InitFunc.class).loadInstanceListSorted();
             List<OrderWrapper> initList = new ArrayList<OrderWrapper>();
             for (InitFunc initFunc : initFuncs) {
                 RecordLog.info("[InitExecutor] Found init func: {}", initFunc.getClass().getCanonicalName());
+                // 如果InitFunc中使用的@InitOrder注解，则进行排序，并包装为OrderWrapper(int order,InitFunc func)
                 insertSorted(initList, initFunc);
             }
+            // 顺序执行InitFunc
             for (OrderWrapper w : initList) {
                 w.func.init();
                 RecordLog.info("[InitExecutor] Executing {} with order {}",

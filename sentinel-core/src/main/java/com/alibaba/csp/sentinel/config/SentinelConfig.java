@@ -25,12 +25,7 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * The universal local configuration center of Sentinel. The config is retrieved from command line arguments
- * and customized properties file by default.
- *
- * @author leyou
- * @author Eric Zhao
- * @author Lin Liang
+ * Sentinel 的通用本地配置中心。默认情况下，配置从命令行参数和自定义属性文件中检索。
  */
 public final class SentinelConfig {
 
@@ -46,6 +41,7 @@ public final class SentinelConfig {
      */
     private static final String CLASSLOADER_CONTEXT = "context";
 
+    // 存放配置(并发安全)
     private static final Map<String, String> props = new ConcurrentHashMap<>();
 
     private static int appType = APP_TYPE_COMMON;
@@ -71,9 +67,14 @@ public final class SentinelConfig {
 
     static {
         try {
+            // 初始化配置，将上面的 static final 配置设置到 props这个Map中
             initialize();
+            // 从配置文件(优先级: 1.JVM Properties:csp.sentinel.config.file  2.环境变量 CSP_SENTINEL_CONFIG_FILE 3.
+            // 默认类路径 classpath:sentinel.properties ) 加载配置，并设置到props这个Map中
             loadProps();
+            // 解析应用名称
             resolveAppName();
+            // 解析应用类型,默认0
             resolveAppType();
             RecordLog.info("[SentinelConfig] Application type resolved: {}", appType);
         } catch (Throwable ex) {
@@ -242,7 +243,7 @@ public final class SentinelConfig {
     }
 
     /**
-     * Function for resolving project name. The order is elaborated below:
+     * 解析项目名称的函数。下面详细说明该顺序:
      *
      * <ol>
      * <li>Resolve the value from {@code CSP_SENTINEL_APP_NAME} system environment;</li>

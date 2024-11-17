@@ -31,11 +31,10 @@ import com.alibaba.csp.sentinel.slotchain.StringResourceWrapper;
 import com.alibaba.csp.sentinel.slots.nodeselector.NodeSelectorSlot;
 
 /**
- * Utility class to get or create {@link Context} in current thread.
+ * 在当前线程中获取或创建上下文的实用程序类。
  *
  * <p>
- * Each {@link SphU}#entry() or {@link SphO}#entry() should be in a {@link Context}.
- * If we don't invoke {@link ContextUtil}#enter() explicitly, DEFAULT context will be used.
+ * 每个 SphU#entry() 或 SphO#entry() 都应位于 Context 中。如果我们没有明确调用 ContextUtil#enter()，则将使用 DEFAULT 上下文。
  * </p>
  *
  * @author jialiang.linjl
@@ -50,7 +49,7 @@ public class ContextUtil {
     private static ThreadLocal<Context> contextHolder = new ThreadLocal<>();
 
     /**
-     * Holds all {@link EntranceNode}. Each {@link EntranceNode} is associated with a distinct context name.
+     * 保存所有 EntranceNode。每个 EntranceNode 都与一个不同的上下文名称相关联。
      */
     private static volatile Map<String, DefaultNode> contextNameNodeMap = new HashMap<>();
 
@@ -82,9 +81,7 @@ public class ContextUtil {
 
     /**
      * <p>
-     * Enter the invocation context, which marks as the entrance of an invocation chain.
-     * The context is wrapped with {@code ThreadLocal}, meaning that each thread has it's own {@link Context}.
-     * New context will be created if current thread doesn't have one.
+     * 进入调用上下文，标志着一个调用链的入口。上下文被 ThreadLocal 包裹，也就是说每个线程都有自己的 Context。如果当前线程没有 Context，则会创建新的 Context。
      * </p>
      * <p>
      * A context will be bound with an {@link EntranceNode}, which represents the entrance statistic node

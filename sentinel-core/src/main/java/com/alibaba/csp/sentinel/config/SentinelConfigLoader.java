@@ -28,10 +28,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import static com.alibaba.csp.sentinel.util.ConfigUtil.addSeparator;
 
 /**
- * <p>The loader that responsible for loading Sentinel common configurations.</p>
- *
- * @author lianglin
- * @since 1.7.0
+ * 负责加载Sentinel公共配置的加载器。
  */
 public final class SentinelConfigLoader {
 
@@ -40,8 +37,10 @@ public final class SentinelConfigLoader {
 
     private static final String DEFAULT_SENTINEL_CONFIG_FILE = "classpath:sentinel.properties";
 
+    // 存放Sentinel配置属性
     private static Properties properties = new Properties();
 
+    // 加载配置
     static {
         try {
             load();
@@ -50,12 +49,18 @@ public final class SentinelConfigLoader {
         }
     }
 
+    /**
+     * 执行加载配置
+     */
     private static void load() {
         // Order: system property -> system env -> default file (classpath:sentinel.properties) -> legacy path
+        // 从JVM Properties参数(csp.sentinel.config.file)获配置文件名
         String fileName = System.getProperty(SENTINEL_CONFIG_PROPERTY_KEY);
         if (StringUtil.isBlank(fileName)) {
+            // 从环境变量(CSP_SENTINEL_CONFIG_FILE) 获取配置文件名
             fileName = System.getenv(SENTINEL_CONFIG_ENV_KEY);
             if (StringUtil.isBlank(fileName)) {
+                // 获取classpath默认配置文件名(classpath:sentinel.properties)
                 fileName = DEFAULT_SENTINEL_CONFIG_FILE;
             }
         }
@@ -79,6 +84,7 @@ public final class SentinelConfigLoader {
     }
 
 
+    // 直接返回配置属性对象
     public static Properties getProperties() {
         return properties;
     }

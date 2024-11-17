@@ -22,20 +22,17 @@ import com.alibaba.csp.sentinel.slots.block.Rule;
 import com.alibaba.csp.sentinel.slots.system.SystemRule;
 
 /**
- * <p>The fundamental Sentinel API for recording statistics and performing rule checking for resources.</p>
+ * <p>用于记录统计数据和执行资源规则检查的基本 Sentinel API。.</p>
  * <p>
- * Conceptually, physical or logical resource that need protection should be
- * surrounded by an entry. The requests to this resource will be blocked if any
- * criteria is met, eg. when any {@link Rule}'s threshold is exceeded. Once blocked,
- * a {@link BlockException} will be thrown.
+ * 从概念上讲，需要保护的物理或逻辑资源应该被一个条目包围。如果满足任何条件，例如超过任何{@link Rule}的阈值，
+ * 则对该资源的请求将被阻止。一旦被阻止，将抛出 {@link BlockException}。
  * </p>
  * <p>
- * To configure the criteria, we can use <code>XxxRuleManager.loadRules()</code> to load rules.
+ * 要配置标准，可以使用 <code>XxxRuleManager.loadRules()</code> 来加载规则
  * </p>
  *
  * <p>
- * Following code is an example, {@code "abc"} represent a unique name for the
- * protected resource:
+ * 以下代码为示例，“abc”代表受保护资源的唯一名称:
  * </p>
  *
  * <pre>
@@ -60,8 +57,7 @@ import com.alibaba.csp.sentinel.slots.system.SystemRule;
  * </pre>
  *
  * <p>
- * Make sure {@code SphU.entry()} and {@link Entry#exit()} be paired in the same thread,
- * otherwise {@link ErrorEntryFreeException} will be thrown.
+ * 确保 SphU.entry() 和 Entry.exit() 在同一个线程中配对，否则将抛出 ErrorEntryFreeException。
  * </p>
  *
  * @author jialiang.linjl

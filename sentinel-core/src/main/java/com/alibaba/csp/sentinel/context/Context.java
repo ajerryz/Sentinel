@@ -24,28 +24,24 @@ import com.alibaba.csp.sentinel.node.Node;
 import com.alibaba.csp.sentinel.slots.nodeselector.NodeSelectorSlot;
 
 /**
- * This class holds metadata of current invocation:<br/>
+ * 此类保存当前调用的元数据:<br/>
  *
  * <ul>
- * <li>the {@link EntranceNode}: the root of the current invocation
- * tree.</li>
- * <li>the current {@link Entry}: the current invocation point.</li>
- * <li>the current {@link Node}: the statistics related to the
+ * <li>the {@link EntranceNode}: 当前调用树的根。.</li>
+ * <li>the current {@link Entry}: 当前调用点。</li>
+ * <li>the current {@link Node}: 与以下相关的统计数据
  * {@link Entry}.</li>
- * <li>the origin: The origin is useful when we want to control different
- * invoker/consumer separately. Usually the origin could be the Service Consumer's app name
- * or origin IP. </li>
+ * <li>the origin: 当我们想要分别控制不同的调用者/消费者时，源非常有用。通常源可以是服务消费者的应用程序名称或源 IP。</li>
  * </ul>
  * <p>
- * Each {@link SphU}#entry() or {@link SphO}#entry() should be in a {@link Context},
- * if we don't invoke {@link ContextUtil}#enter() explicitly, DEFAULT context will be used.
+ * 每个 {@link SphU}#entry() 或者 {@link SphO}#entry() 都应该在一个 {@link Context},
+ * 如果没有明确调用 {@link ContextUtil}#enter() , 将使用 DEFAULT Context
  * </p>
  * <p>
- * A invocation tree will be created if we invoke {@link SphU}#entry() multi times in
- * the same context.
+ * 如果我们在相同的Context中多次调用 SphU#entry()，就会创建一个调用树。
  * </p>
  * <p>
- * Same resource in different context will count separately, see {@link NodeSelectorSlot}.
+ * 同一资源在不同情境下会分开计算, see {@link NodeSelectorSlot}.
  * </p>
  *
  * @author jialiang.linjl
@@ -62,20 +58,21 @@ public class Context {
     private final String name;
 
     /**
-     * The entrance node of current invocation tree.
+     * 当前调用树的入口节点。
      */
     private DefaultNode entranceNode;
 
     /**
-     * Current processing entry.
+     * 当前处理 Entry
      */
     private Entry curEntry;
 
     /**
-     * The origin of this context (usually indicate different invokers, e.g. service consumer name or origin IP).
+     * 该上下文的来源（通常表示不同的调用者，例如服务消费者名称或来源IP）。
      */
     private String origin = "";
 
+    // 是否是异步的
     private final boolean async;
 
     /**
