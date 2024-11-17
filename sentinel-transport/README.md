@@ -1,4 +1,3 @@
 # Sentinel Transport
 
-The Sentinel transport module provides basic interfaces about Sentinel monitoring API server and client
-(`CommandCenter` and `HeartbeatSender`) as well implementations using different libraries or protocols.
+Sentinel 传输模块提供了 Sentinel 监控 API 服务器和客户端（`CommandCenter` 和 `HeartbeatSender`）的基本接口以及使用不同库或协议的实现。

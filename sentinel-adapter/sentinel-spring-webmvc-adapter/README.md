@@ -1,10 +1,8 @@
 # Sentinel Spring MVC Adapter
 
 ## Introduction
-
-Sentinel provides integration for Spring Web to enable flow control for web requests.
-
-Add the following dependency in `pom.xml` (if you are using Maven):
+Sentinel 为 Spring Web 提供集成，以实现 Web 请求的流程控制。  
+在 `pom.xml` 中添加以下依赖项（如果您使用 Maven）：
 
 ```xml
 <dependency>
@@ -14,8 +12,7 @@ Add the following dependency in `pom.xml` (if you are using Maven):
 </dependency>
 ```
 
-Then we could add a configuration bean to configure the interceptor:
-
+然后我们可以添加一个配置 bean 来配置拦截器：
 ```java
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
@@ -31,7 +28,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 }
 ```
 
-Then Sentinel will extract URL patterns defined in Web Controller as the web resource (e.g. `/foo/{id}`).
+然后 Sentinel 将提取 Web Controller 中定义的 URL 模式作为 Web 资源（例如 /foo/{id}）。
 
 ## Configuration
 

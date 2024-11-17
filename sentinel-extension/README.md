@@ -1,6 +1,5 @@
 # Sentinel Extension
 
-Sentinel extension modules provide additional extension points
-and functions.
+Sentinel 扩展模块提供额外的扩展点和功能。
 
 
