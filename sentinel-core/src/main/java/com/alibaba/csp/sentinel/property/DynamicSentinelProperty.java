@@ -23,7 +23,9 @@ import com.alibaba.csp.sentinel.log.RecordLog;
 
 public class DynamicSentinelProperty<T> implements SentinelProperty<T> {
 
+    // 监听器列表
     protected Set<PropertyListener<T>> listeners = Collections.synchronizedSet(new HashSet<PropertyListener<T>>());
+    // T 一般是List<XxxRule>
     private T value = null;
 
     public DynamicSentinelProperty() {

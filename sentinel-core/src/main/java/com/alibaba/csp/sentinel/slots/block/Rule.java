@@ -16,7 +16,7 @@
 package com.alibaba.csp.sentinel.slots.block;
 
 /**
- * Base interface of all rules.
+ * Base interface of all rules.（所有规则的父接口,每个规则都能获取ResourceName）
  *
  * @author youji.zj
  */

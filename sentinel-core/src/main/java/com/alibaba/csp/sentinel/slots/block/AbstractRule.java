@@ -31,10 +31,11 @@ public abstract class AbstractRule implements Rule {
     /**
      * <p>
      * Application name that will be limited by origin.
-     * The default limitApp is {@code default}, which means allowing all origin apps.
+     * The default limitApp is {@code default}, which means allowing all origin apps.(受源限制的应用名称，默认limitApp为default，即允许所有源应用。)
      * </p>
      * <p>
      * For authority rules, multiple origin name can be separated with comma (',').
+     * (对于授权规则，多个来源名称可以用逗号（'，'）分隔。)
      * </p>
      */
     private String limitApp;

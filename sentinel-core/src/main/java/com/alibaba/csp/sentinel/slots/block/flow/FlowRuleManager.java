@@ -37,10 +37,10 @@ import com.alibaba.csp.sentinel.property.SentinelProperty;
 
 /**
  * <p>
- * One resources can have multiple rules. And these rules take effects in the following order:
+ * 一个资源可以拥有多条规则，规则生效顺序如下：:
  * <ol>
- * <li>requests from specified caller</li>
- * <li>no specified caller</li>
+ * <li>requests from specified caller(请求来自指定的调用者)</li>
+ * <li>no specified caller(未指定调用者)</li>
  * </ol>
  * </p>
  *
@@ -50,21 +50,31 @@ import com.alibaba.csp.sentinel.property.SentinelProperty;
  */
 public class FlowRuleManager {
 
+
+    // 存放流控规则(修改原子性)
     private static final AtomicReference<Map<String, List<FlowRule>>> flowRules = new AtomicReference<Map<String, List<FlowRule>>>();
 
+    // 监听器
     private static final FlowPropertyListener LISTENER = new FlowPropertyListener();
+
+    // 当前配置
     private static SentinelProperty<List<FlowRule>> currentProperty = new DynamicSentinelProperty<List<FlowRule>>();
 
+    // 调度器线程-1个线程。
     @SuppressWarnings("PMD.ThreadPoolCreationRule")
     private static final ScheduledExecutorService SCHEDULER = Executors.newScheduledThreadPool(1,
         new NamedThreadFactory("sentinel-metrics-record-task", true));
 
+    // 使用该类时才初始化
     static {
+        // 初始空流控规则
         flowRules.set(Collections.<String, List<FlowRule>>emptyMap());
+        // 将流控监听器
         currentProperty.addListener(LISTENER);
+        // 启动 指标定时 调度器
         startMetricTimerListener();
     }
-    
+
     /**
      * <p> Start the MetricTimerListener
      * <ol>
@@ -82,9 +92,10 @@ public class FlowRuleManager {
                     SentinelConfig.METRIC_FLUSH_INTERVAL);
             return;
         }
+        // 固定s 运行调度器
         SCHEDULER.scheduleAtFixedRate(new MetricTimerListener(), 0, flushInterval, TimeUnit.SECONDS);
     }
-    
+
     /**
      * Listen to the {@link SentinelProperty} for {@link FlowRule}s. The property is the source of {@link FlowRule}s.
      * Flow rules can also be set by {@link #loadRules(List)} directly.
