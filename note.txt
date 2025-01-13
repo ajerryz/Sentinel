@@ -1,0 +1,25 @@
+# 笔记
+#
+
+sentinel-adapter 对各种框架、中间件的支持
+sentinel-benchmark 测试类
+sentinel-cluster 集群实现
+sentinel-core 核心功能
+sentinel-dashboard 控制台
+sentinel-demo 案例
+sentinel-extension 扩展实现，支持各个中间件；主要是数据源
+sentinel-logging 日志模块
+sentinel-transport 传输层模块：netty | http
+
+
+# ==
+● 所有资源对应一个 Entry和一个资源名称
+● 每个Entry创建的时会同时创建一系列功能插槽（责任链）
+● 内置功能插槽
+  ○ NodeSelectorSlot：收集资源的路径，并将资源调用路径以树状存储起来，用于根据调用路径来限流降级
+  ○ ClusterBuilderSlot：存储资源的统计信息及调用信息，用做多维度限流、降级的依据；如资源的RT,QPS,thread count等
+  ○ StatisticSlot：记录不同维度的runtime指标监控信息
+  ○ FlowSlot：根据预设的限流规则以及前面的slot统计信息来进行流量控制
+  ○ AuthoritySlot：根据配置的黑白名单和调用来源信息，做黑白名单控制
+  ○ DegradeSlot：根据统计信息及预设的降级规则做熔断降级
+  ○ SystemSlot：通过系统的状态，例如load1等控制总的入口流量。
