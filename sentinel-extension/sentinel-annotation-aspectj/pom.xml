@@ -24,6 +24,7 @@
             <artifactId>sentinel-core</artifactId>
         </dependency>
 
+        <!--    AOP 库-->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
