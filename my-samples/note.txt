@@ -1,0 +1,4 @@
+1.引入 sentinel-core 可直接代码方式将一段代码作为资源进行保护。
+2.引入 sentinel-core & sentinel-annotation-aspectj 可使用注解方式进行资源定义
+        sentinel-core + sentinel-annotation-aspectj + spring-aop 注解实现降级功能
+3.引入 sentinel-transport-simple-http 可接入 sentinel-dashboard

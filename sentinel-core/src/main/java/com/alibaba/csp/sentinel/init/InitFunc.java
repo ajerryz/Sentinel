@@ -16,6 +16,7 @@
 package com.alibaba.csp.sentinel.init;
 
 /**
+ * 初始化函数，用于Sentinel各种初始化操作。具体使用SPI形式实现。
  * @author Eric Zhao
  */
 public interface InitFunc {

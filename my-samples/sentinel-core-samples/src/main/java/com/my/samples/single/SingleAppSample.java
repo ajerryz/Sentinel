@@ -39,7 +39,6 @@ public class SingleAppSample {
 
     }
 
-
     private static void initFlowRules() {
         List<FlowRule> flowRules = new ArrayList<>();
         FlowRule flowRule = new FlowRule();

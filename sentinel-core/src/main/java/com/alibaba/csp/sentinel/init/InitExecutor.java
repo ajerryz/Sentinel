@@ -24,7 +24,9 @@ import com.alibaba.csp.sentinel.log.RecordLog;
 import com.alibaba.csp.sentinel.spi.SpiLoader;
 
 /**
- * 加载已注册的init函数并按顺序执行。
+ * 1.加载已注册的InitFunc函数并按顺序执行。
+ * 2.静态方法真正逻辑只会被执行一次
+ * 3.静态doInit中执行每个排好序的InitFunc的init方法
  */
 public final class InitExecutor {
 
@@ -35,23 +37,26 @@ public final class InitExecutor {
      * 初始化只会执行一次。
      */
     public static void doInit() {
+        // 该doInit()方法只会执行一次
         if (!initialized.compareAndSet(false, true)) {
             return;
         }
         try {
+            // 1.SPI 加载 InitFunc实例
             // 加载或从缓存中获取通过Spi方式缓存的InitFunc实例
             List<InitFunc> initFuncs = SpiLoader.of(InitFunc.class).loadInstanceListSorted();
             List<OrderWrapper> initList = new ArrayList<OrderWrapper>();
+            // 2.包装为带order
             for (InitFunc initFunc : initFuncs) {
                 RecordLog.info("[InitExecutor] Found init func: {}", initFunc.getClass().getCanonicalName());
                 // 如果InitFunc中使用的@InitOrder注解，则进行排序，并包装为OrderWrapper(int order,InitFunc func)
                 insertSorted(initList, initFunc);
             }
-            // 顺序执行InitFunc
+            // 3.顺序执行InitFunc的具体内容
             for (OrderWrapper w : initList) {
                 w.func.init();
                 RecordLog.info("[InitExecutor] Executing {} with order {}",
-                    w.func.getClass().getCanonicalName(), w.order);
+                        w.func.getClass().getCanonicalName(), w.order);
             }
         } catch (Exception ex) {
             RecordLog.warn("[InitExecutor] WARN: Initialization failed", ex);
@@ -81,8 +86,12 @@ public final class InitExecutor {
         }
     }
 
-    private InitExecutor() {}
+    private InitExecutor() {
+    }
 
+    /**
+     * 排序的InitFunc包装器
+     */
     private static class OrderWrapper {
         private final int order;
         private final InitFunc func;

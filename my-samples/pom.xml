@@ -10,7 +10,12 @@
     </parent>
 
     <artifactId>my-samples</artifactId>
+    <packaging>pom</packaging>
     <description>我的案例</description>
+    <modules>
+        <module>sentinel-core-samples</module>
+        <module>spring-boot-samples</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -18,12 +23,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-core</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
