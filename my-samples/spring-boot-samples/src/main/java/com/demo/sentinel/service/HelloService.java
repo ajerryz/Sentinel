@@ -11,8 +11,13 @@ import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 
+import javax.annotation.Resource;
+
 @Service
 public class HelloService {
+
+    @Resource
+    private OrderService orderService;
 
     static {
         initFlowRules();
@@ -21,16 +26,16 @@ public class HelloService {
     /**
      * 自身调自己不会触发
      */
-    @Scheduled(fixedRate = 100)
+    //@Scheduled(fixedRate = 100)
     public void startTask() {
         hello("zs");
     }
 
 
-
     @SentinelResource(value = "hello-sentinel-annotation", fallback = "helloFallback")
     public void hello(String name) {
         System.out.println("hello " + name);
+        System.out.println(orderService.getOrderById(1L));
     }
 
     public void helloFallback(String name) {

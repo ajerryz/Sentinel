@@ -1,0 +1,10 @@
+server:
+  port: 10000
+
+# apollo配置
+app:
+  id: tsentinel
+apollo:
+  cacheDir: cache/
+  meta: http://192.168.10.211:18080
+  env: dev

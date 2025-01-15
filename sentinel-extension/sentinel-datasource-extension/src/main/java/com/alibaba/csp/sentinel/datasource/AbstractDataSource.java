@@ -28,9 +28,13 @@ import com.alibaba.csp.sentinel.property.SentinelProperty;
  */
 public abstract class AbstractDataSource<S, T> implements ReadableDataSource<S, T> {
 
+    // 将获取的配置字符串转换为流控规则的解析器(转换器)
     protected final Converter<S, T> parser;
+
+    // 实际存储规则的地方
     protected final SentinelProperty<T> property;
 
+    // 构造器
     public AbstractDataSource(Converter<S, T> parser) {
         if (parser == null) {
             throw new IllegalArgumentException("parser can't be null");
@@ -44,6 +48,7 @@ public abstract class AbstractDataSource<S, T> implements ReadableDataSource<S, 
         return loadConfig(readSource());
     }
 
+    // 解析器解析配置
     public T loadConfig(S conf) throws Exception {
         T value = parser.convert(conf);
         return value;

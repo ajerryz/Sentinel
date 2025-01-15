@@ -76,7 +76,8 @@ public final class SpiLoader<S> {
     private static final String SPI_FILE_PREFIX = "META-INF/services/";
 
     // Cache the SpiLoader instances, key: classname of Service, value: SpiLoader instance
-    // 用于缓存对应的接口的权限定为key的 SpiLoader Map
+    // 用于缓存对应的接口的全限定为key的 SpiLoader Map
+    // key=com.xx.XxInitFunc
     private static final ConcurrentHashMap<String, SpiLoader> SPI_LOADER_MAP = new ConcurrentHashMap<>();
 
     // Cache the classes of Provider

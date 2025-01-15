@@ -18,7 +18,8 @@ package com.alibaba.csp.sentinel.datasource;
 import com.alibaba.csp.sentinel.property.SentinelProperty;
 
 /**
- * The readable data source is responsible for retrieving configs (read-only).
+ * The readable data source is responsible for retrieving configs (read-only).<br/>
+ * 可读数据源负责检索配置（只读）。
  *
  * @param <S> source data type
  * @param <T> target data type
