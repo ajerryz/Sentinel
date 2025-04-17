@@ -15,11 +15,13 @@ import java.util.concurrent.TimeUnit;
  * @author jerry zhang
  * @since 2025/1/14 02:11
  */
-public class SingleAppSample {
+public class QuickStart {
 
     private static final String RESOURCE_NAME = "hello-sentinel";
 
     public static void main(String[] args) {
+
+        // 1.初始化流控规则
         initFlowRules();
 
         while (true) {

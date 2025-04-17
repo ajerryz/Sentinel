@@ -28,7 +28,7 @@ import com.alibaba.csp.sentinel.context.Context;
 public interface ProcessorSlot<T> {
 
     /**
-     * Entrance of this slot.
+     * 此slot的入口
      *
      * @param context         current {@link Context}
      * @param resourceWrapper current resource

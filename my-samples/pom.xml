@@ -15,6 +15,7 @@
     <modules>
         <module>sentinel-core-samples</module>
         <module>spring-boot-samples</module>
+        <module>spring-boot-apollo-datasource</module>
     </modules>
 
     <properties>
