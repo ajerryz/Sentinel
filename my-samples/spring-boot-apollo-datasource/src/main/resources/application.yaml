@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: sentinel-apollo-sample
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 192.168.10.211:8788
+
+
+server.port: 9090
+
+
+
+
+# apollo 配置
+app.id: sentinel-sample   # apollo 中创建应用时的 AppId
+apollo:
+  meta: "http://192.168.10.211:8080"    # meta-server 地址
+  cluster: default                      # cluster
+  bootstrap:
+    enabled:  true  # 是否开启apollo
+    namespaces: application             # 设置namespace,多个使用逗号分隔
+    eagerLoad:
+      enabled: true # 将Apollo加载到初始化日志系统之前
+  cache-dir: ./cache
